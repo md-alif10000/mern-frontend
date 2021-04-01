@@ -9,6 +9,7 @@ import { isUserLoggedIn } from "./actions/auth.action";
 import ProductDetailsPage2 from "./containers/ProductDetailsPage/index2";
 import Login from "./containers/auth/Login/index";
 import Register from "./containers/auth/Register/index4";
+import ChangePassword from "./containers/auth/RESET_PASS";
 import Recharge from "./containers/Recharge";
 import RechargeHistory from "./containers/Recharge/history";
 import CheckoutPage2 from "./containers/CheckoutPage/option2/Checkout";
@@ -45,9 +46,10 @@ function App() {
 					<Route path='/' exact component={HomePage} />
 					<Route path='/cart' component={CartPage3} />
 					<Route path='/checkout' component={CheckoutPage2} />
-				
+
 					<Route path='/login' component={Login} />
 					<Route path='/register' component={Register} />
+					<Route path='/change_password' component={ChangePassword} />
 					<Route path='/account/orders' component={OrderPage} />
 					<Route path='/account/recharge/history' component={RechargeHistory} />
 

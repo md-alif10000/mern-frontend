@@ -34,6 +34,37 @@ export const login = (user) => {
 	};
 };
 
+export const registerOtp=(phone)=>{
+
+	return async (dispatch) => {
+		console.log(phone)
+		dispatch({ type: authConstants.REGISTER_OTP_FAILURE });
+		const res = await axios.post("/register_verify", {phone});
+
+		if (res.status === 200) {
+			
+			dispatch({
+				type: authConstants.REGISTER_OTP_SUCCESS,
+			
+			});
+			Swal.fire("Wow.", "Otp sent successful.!", "success");
+		} else {
+			if (res.status === 400) {
+				dispatch({
+					type: authConstants.REGISTER_OTP_FAILURE,
+					payload: { error: res.data.error },
+				});
+				Swal.fire("Oops...", "Something went wrong!", "error");
+			}
+		}
+	};
+
+
+
+
+
+}
+
 export const register = (user) => {
 	return async (dispatch) => {
 		dispatch({ type: authConstants.REGISTER_REQUEST });
@@ -117,3 +148,84 @@ export const logout = () => {
 		// }
 	};
 };
+
+
+
+export const passUpdateOtp=(phone)=>{
+
+
+	return async (dispatch) => {
+		dispatch({ type: authConstants.CHANGE_PASSWORD_OTP_REQUEST });
+		const res = await axios.post("/pass_update_otp", {phone});
+
+		if (res.status === 200) {
+
+			dispatch({
+				type: authConstants.CHANGE_PASSWORD_OTP_SUCCESS,
+			
+			});
+			Swal.fire("Wow.", "Otp sent successfully.!", "success");
+		} else {
+			if (res.status === 404) {
+				dispatch({
+					type: authConstants.CHANGE_PASSWORD_OTP_FAILURE,
+					payload: { error: res.data.error },
+				});
+				Swal.fire("Oops...", "User not found", "error");
+			}
+
+
+
+				if (res.status === 400) {
+					dispatch({
+						type: authConstants.CHANGE_PASSWORD_OTP_FAILURE,
+						payload: { error: res.data.error },
+					});
+					Swal.fire("Oops...", "Something went wrong..", "error");
+				}
+		}
+	};
+
+
+
+
+}
+
+export const updatePassword=(user)=>{
+
+
+
+	return async (dispatch) => {
+		dispatch({ type: authConstants.CHANGE_PASSWORD_OTP_REQUEST });
+		const res = await axios.post("/change_password",  user );
+
+		if (res.status === 201) {
+			dispatch({
+				type: authConstants.CHANGE_PASSWORD_SUCCESS,
+			});
+			Swal.fire("Wow.", "Password changed successfully.!", "success");
+		} else {
+				
+			if (res.status === 400) {
+				dispatch({
+					type: authConstants.CHANGE_PASSWORD_FAILURE,
+					payload: { error: res.data.error },
+				});
+				Swal.fire("Oops...", "Something went wrong..", "error");
+			}
+
+				if (res.status === 401) {
+					dispatch({
+						type: authConstants.CHANGE_PASSWORD_FAILURE,
+						payload: { error: res.data.error },
+					});
+					Swal.fire("Oops...", "Invalid OTP..", "error");
+				}
+		}
+	};
+
+
+
+
+
+}
