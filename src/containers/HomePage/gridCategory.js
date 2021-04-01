@@ -56,8 +56,8 @@ export default function GridCategory() {
 				slidesToShow: 8,
 				slidesToScroll: 2,
 				autoplay: true,
-				speed: 4000,
-				autoplaySpeed: 4000,
+				speed: 6000,
+				autoplaySpeed: 6000,
 				pauseOnHover: true,
 		
 				responsive: [

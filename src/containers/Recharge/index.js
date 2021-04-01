@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import { addRecharge, getRecharges } from "../../actions/recharge.action";
 import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 export default function Recharge() {
 	const [number, setNumber] = useState("");
@@ -32,7 +33,8 @@ export default function Recharge() {
 
 	return (
 		<>
-			<div className='login-container'>
+		<Header fixed/>
+			<div className='login-container mt-5 pt-3'>
 				<div className='icon-container'></div>
 				<form>
 					<h2>Recharge</h2>

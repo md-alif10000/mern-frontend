@@ -3,7 +3,7 @@
 }
 
 body{
-    background: #f1f3f6;
+    background: url(https://cdn.pixabay.com/photo/2017/12/13/16/40/background-3017167_1280.jpg);
 }
 .flexRow{
     display: flex;

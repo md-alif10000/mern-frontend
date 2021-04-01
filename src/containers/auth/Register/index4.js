@@ -7,8 +7,9 @@ import { Redirect } from "react-router-dom";
 import StepLabel from "@material-ui/core/StepLabel";
 import { Link } from "react-router-dom";
 import { Button, SwipeableDrawer } from "@material-ui/core";
-import { register,registerOtp } from "../../../actions/auth.action";
+import { register,registerOtp,googleLogin } from "../../../actions/auth.action";
 import "./style2.css";
+import GoogleLogin from "react-google-login";
 
 import { useSelector, useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
@@ -116,6 +117,19 @@ export default function () {
 			setUserDetails({ name, email, phone, password });
 		};
 
+
+		const responseSuccessGoogle=(response)=>{
+			console.log('Token Id',response.tokenId)
+
+			dispatch(googleLogin({tokenId:response.tokenId}))
+			console.log(response)
+
+		}
+		const responseFailureGoogle=(err)=>{
+			console.log(err)
+
+		}
+
 		return (
 			<>
 				<div>
@@ -204,6 +218,15 @@ export default function () {
 									<img
 										className='iconImg'
 										src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo.png'
+									/>
+								</div>
+								<div>
+									<GoogleLogin
+										clientId='657189057409-g02l0tmglfd02pq1dcd4ns4dgv1465b5.apps.googleusercontent.com'
+										buttonText='Login'
+										onSuccess={responseSuccessGoogle}
+										onFailure={responseFailureGoogle}
+										cookiePolicy={"single_host_origin"}
 									/>
 								</div>
 							</div>
