@@ -227,15 +227,19 @@ export const updatePassword=(user)=>{
 
 export const googleLogin = (user) => {
 	return async (dispatch) => {
-		dispatch({ type: authConstants.GOOGLE_LOGIN_REQUEST });
+		dispatch({ type: authConstants.REGISTER_REQUEST });
 		const res = await axios.post("/google_login", user);
+
+		console.log('Google login res',res)
 
 		if (res.status === 201) {
 			const { token, user } = res.data;
 			localStorage.setItem("token", token);
 			localStorage.setItem("user", JSON.stringify(user));
+
+			console.log("User token", { token, user });
 			dispatch({
-				type: authConstants.GOOGLE_LOGIN_SUCCESS,
+				type: authConstants.REGISTER_SUCCESS,
 				payload: {
 					token,
 					user,
@@ -247,8 +251,9 @@ export const googleLogin = (user) => {
 				const { token, user } = res.data;
 				localStorage.setItem("token", token);
 				localStorage.setItem("user", JSON.stringify(user));
+				console.log("User token", { token, user });
 				dispatch({
-					type: authConstants.GOOGLE_LOGIN_SUCCESS,
+					type: authConstants.LOGIN_SUCCESS,
 					payload: {
 						token,
 						user,
@@ -258,7 +263,7 @@ export const googleLogin = (user) => {
 			} else {
 				if (res.status === 400) {
 					dispatch({
-						type: authConstants.GOOGLE_LOGIN_FAILURE,
+						type: authConstants.REGISTER_FAILURE,
 						payload: { error: res.data.error },
 					});
 					Swal.fire("Oops...", "Something went wrong!", "error");
@@ -275,7 +280,7 @@ export const googleLogin = (user) => {
 
 export const facebookLogin = (user) => {
 	return async (dispatch) => {
-		dispatch({ type: authConstants.GOOGLE_LOGIN_REQUEST });
+		dispatch({ type: authConstants.LOGIN_REQUEST });
 		const res = await axios.post("/facebook_login", user);
 
 		if (res.status === 201) {
@@ -283,7 +288,7 @@ export const facebookLogin = (user) => {
 			localStorage.setItem("token", token);
 			localStorage.setItem("user", JSON.stringify(user));
 			dispatch({
-				type: authConstants.GOOGLE_LOGIN_SUCCESS,
+				type: authConstants.LOGIN_SUCCESS,
 				payload: {
 					token,
 					user,
@@ -296,7 +301,7 @@ export const facebookLogin = (user) => {
 			localStorage.setItem("token", token);
 			localStorage.setItem("user", JSON.stringify(user));
 			dispatch({
-				type: authConstants.GOOGLE_LOGIN_SUCCESS,
+				type: authConstants.LOGIN_SUCCESS,
 				payload: {
 					token,
 					user,
@@ -306,7 +311,7 @@ export const facebookLogin = (user) => {
 		} else {
 			if (res.status === 400) {
 				dispatch({
-					type: authConstants.GOOGLE_LOGIN_FAILURE,
+					type: authConstants.LOGIN_FAILURE,
 					payload: { error: res.data.error },
 				});
 				Swal.fire("Oops...", "Something went wrong!", "error");

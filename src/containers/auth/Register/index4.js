@@ -229,26 +229,31 @@ export default function () {
 										src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo.png'
 									/>
 								</div> */}
-								<div>
-									<GoogleLogin
-										clientId='657189057409-g02l0tmglfd02pq1dcd4ns4dgv1465b5.apps.googleusercontent.com'
-										buttonText='Login'
-										onSuccess={responseSuccessGoogle}
-										onFailure={responseFailureGoogle}
-										cookiePolicy={"single_host_origin"}
-									/>
-									<FacebookLogin
-										appId='142413274468639'
-										autoLoad={false}
-										fields='name,email,picture'
-										callback={responseFacebook}
-										// cssClass='kep-login-facebook-[80]'
-										icon='fa-facebook'
-										style={{ width: "80px" }}
-										size='small'
-										textButton='facebook'
-										
-									/>
+								<div
+									style={{ display: "flex", justifyContent: "space-between" }}>
+									<div style={{ margin: "20px" }}>
+										<GoogleLogin
+											clientId='657189057409-g02l0tmglfd02pq1dcd4ns4dgv1465b5.apps.googleusercontent.com'
+											buttonText=''
+											onSuccess={responseSuccessGoogle}
+											onFailure={responseFailureGoogle}
+											cookiePolicy={"single_host_origin"}
+											style={{ width: "250px" }}
+										/>
+									</div>
+									<div style={{ margin: "20px" }}>
+										<FacebookLogin
+											appId='142413274468639'
+											autoLoad={false}
+											fields='name,email,picture'
+											callback={responseFacebook}
+											// cssClass='kep-login-facebook-[80]'
+											icon='fa-facebook'
+											style={{ width: "80px" }}
+											size='small'
+											textButton=''
+										/>
+									</div>
 								</div>
 							</div>
 						</form>
