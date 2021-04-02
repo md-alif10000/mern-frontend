@@ -3,6 +3,7 @@ import axios from "../helpers/axios";
 import { authConstants, cartConstants } from "./constants";
 import Swal from "sweetalert2";
 
+
 export const login = (user) => {
 	return async (dispatch) => {
 		dispatch({ type: authConstants.LOGIN_REQUEST });
@@ -192,9 +193,6 @@ export const passUpdateOtp=(phone)=>{
 }
 
 export const updatePassword=(user)=>{
-
-
-
 	return async (dispatch) => {
 		dispatch({ type: authConstants.CHANGE_PASSWORD_OTP_REQUEST });
 		const res = await axios.post("/change_password",  user );
@@ -224,8 +222,98 @@ export const updatePassword=(user)=>{
 		}
 	};
 
-
-
-
-
 }
+
+
+export const googleLogin = (user) => {
+	return async (dispatch) => {
+		dispatch({ type: authConstants.GOOGLE_LOGIN_REQUEST });
+		const res = await axios.post("/google_login", user);
+
+		if (res.status === 201) {
+			const { token, user } = res.data;
+			localStorage.setItem("token", token);
+			localStorage.setItem("user", JSON.stringify(user));
+			dispatch({
+				type: authConstants.GOOGLE_LOGIN_SUCCESS,
+				payload: {
+					token,
+					user,
+				},
+			});
+			Swal.fire("Wow.", "Register Successful.!", "success");
+		}
+			if (res.status === 200) {
+				const { token, user } = res.data;
+				localStorage.setItem("token", token);
+				localStorage.setItem("user", JSON.stringify(user));
+				dispatch({
+					type: authConstants.GOOGLE_LOGIN_SUCCESS,
+					payload: {
+						token,
+						user,
+					},
+				});
+				Swal.fire("Wow.", "Register Successful.!", "success");
+			} else {
+				if (res.status === 400) {
+					dispatch({
+						type: authConstants.GOOGLE_LOGIN_FAILURE,
+						payload: { error: res.data.error },
+					});
+					Swal.fire("Oops...", "Something went wrong!", "error");
+				}
+			}
+	};
+};
+
+
+
+
+
+
+
+export const facebookLogin = (user) => {
+	return async (dispatch) => {
+		dispatch({ type: authConstants.GOOGLE_LOGIN_REQUEST });
+		const res = await axios.post("/facebook_login", user);
+
+		if (res.status === 201) {
+			const { token, user } = res.data;
+			localStorage.setItem("token", token);
+			localStorage.setItem("user", JSON.stringify(user));
+			dispatch({
+				type: authConstants.GOOGLE_LOGIN_SUCCESS,
+				payload: {
+					token,
+					user,
+				},
+			});
+			Swal.fire("Wow.", "Register Successful.!", "success");
+		}
+		if (res.status === 200) {
+			const { token, user } = res.data;
+			localStorage.setItem("token", token);
+			localStorage.setItem("user", JSON.stringify(user));
+			dispatch({
+				type: authConstants.GOOGLE_LOGIN_SUCCESS,
+				payload: {
+					token,
+					user,
+				},
+			});
+			Swal.fire("Wow.", "Register Successful.!", "success");
+		} else {
+			if (res.status === 400) {
+				dispatch({
+					type: authConstants.GOOGLE_LOGIN_FAILURE,
+					payload: { error: res.data.error },
+				});
+				Swal.fire("Oops...", "Something went wrong!", "error");
+			}
+		}
+	};
+};
+
+
+

@@ -7,8 +7,11 @@ import { Redirect } from "react-router-dom";
 import StepLabel from "@material-ui/core/StepLabel";
 import { Link } from "react-router-dom";
 import { Button, SwipeableDrawer } from "@material-ui/core";
-import { register,registerOtp } from "../../../actions/auth.action";
+import { register,registerOtp,googleLogin, facebookLogin } from "../../../actions/auth.action";
 import "./style2.css";
+
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 import { useSelector, useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
@@ -116,6 +119,26 @@ export default function () {
 			setUserDetails({ name, email, phone, password });
 		};
 
+
+		const responseSuccessGoogle=(response)=>{
+			console.log('Token Id',response.tokenId)
+
+			dispatch(googleLogin({tokenId:response.tokenId}))
+			console.log(response)
+
+		}
+		const responseFailureGoogle=(err)=>{
+			console.log(err)
+
+		}
+
+
+		const responseFacebook=(response)=>{
+			console.log(response)
+			dispatch(facebookLogin({accessToken:response.accessToken,userID:response.userID,picture:response.picture}))
+
+		}
+
 		return (
 			<>
 				<div>
@@ -194,7 +217,7 @@ export default function () {
 							<h2>OR</h2>
 							<p>Login With</p>
 							<div className='loginicon-container'>
-								<div className='icon'>
+								{/* <div className='icon'>
 									<img
 										className='iconImg'
 										src='https://img-authors.flaticon.com/google.jpg'
@@ -205,6 +228,27 @@ export default function () {
 										className='iconImg'
 										src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo.png'
 									/>
+								</div> */}
+								<div>
+									<GoogleLogin
+										clientId='657189057409-g02l0tmglfd02pq1dcd4ns4dgv1465b5.apps.googleusercontent.com'
+										buttonText='Login'
+										onSuccess={responseSuccessGoogle}
+										onFailure={responseFailureGoogle}
+										cookiePolicy={"single_host_origin"}
+									/>
+									<FacebookLogin
+										appId='142413274468639'
+										autoLoad={false}
+										fields='name,email,picture'
+										callback={responseFacebook}
+										// cssClass='kep-login-facebook-[80]'
+										icon='fa-facebook'
+										style={{ width: "80px" }}
+										size='small'
+										textButton='facebook'
+										
+									/>
 								</div>
 							</div>
 						</form>
@@ -212,7 +256,7 @@ export default function () {
 				</div>
 			</>
 		);
-	}
+	} 
 
 	const Otp = (props) => {
 		const [otp, setOtp] = useState("");
