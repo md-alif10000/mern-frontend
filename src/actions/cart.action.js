@@ -47,9 +47,10 @@ export const addToCart = (product, newQty = 1) => {
 			qty,
 		};
 
-		console.log(qty)
+		
 
 		if (auth.authenticate) {
+					console.log("Product qty if auth", qty);
 			dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });
 			const payload = {
 			
@@ -70,7 +71,7 @@ export const addToCart = (product, newQty = 1) => {
 			localStorage.setItem("cart", JSON.stringify(cartItems));
 		}
 
-		console.log("addToCart::", cartItems);
+		// console.log("addToCart::", cartItems);
 
 		dispatch({
 			type: cartConstants.ADD_TO_CART_SUCCESS,

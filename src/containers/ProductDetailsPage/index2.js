@@ -204,9 +204,9 @@ export default function ProductDetails2(props) {
 					</div>
 				</section>
 
-				<div className='container'>
+				<div className='container text-lg' style={{fontSize:'20px'}}>
 					<div className={classes.root}>
-						<AppBar position='static'>
+						<AppBar position='static' style={{fontSize:'20px'}}>
 							<Tabs
 								value={value}
 								onChange={handleChange}
@@ -268,7 +268,7 @@ export default function ProductDetails2(props) {
 									</Select>
 								</FormControl>
 							</div>
-							<div>
+							<div className='mt-4'>
 								<Button
 									style={{ backgroundColor: "#fce00d", color: "black" }}
 									onClick={onSubmitReview}>
