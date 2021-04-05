@@ -1,4 +1,4 @@
-import { cartConstants } from "../actions/constants";
+import { cartConstants,couponConatants } from "../actions/constants";
 
 const initState = {
 	cartItems: {
@@ -12,6 +12,7 @@ const initState = {
 	},
 	updatingCart: false,
 	error: null,
+	coupon:{}
 };
 
 export default (state = initState, action) => {
@@ -41,6 +42,11 @@ export default (state = initState, action) => {
 				...initState,
 			};
 			break;
+			case couponConatants.VALIDATE_COUPON_SUCCESS:
+				state={
+					...state,
+					coupon:action.payload.coupon
+				}
 	}
 	return state;
 };

@@ -91,6 +91,7 @@ export default function Checkout(props) {
 
 	const auth = useSelector((state) => state.auth);
 	const cart = useSelector((state) => state.cart);
+	const coupon=JSON.parse(localStorage.getItem('coupon'))
 
 	const handleNext = () => {
 		setActiveStep(activeStep + 1);
@@ -100,18 +101,27 @@ export default function Checkout(props) {
 		setActiveStep(activeStep - 1);
 	};
 
+	const couponAmount= coupon ? coupon.type== 'percentage'? coupon.amount*(1/100) : coupon.amount :null
+	console.log("Coupon Amount",couponAmount)
+
 	//Address from Hooks............
 
 	//Order confirm hooksssss............
 	const [confirmOrder, setConfirmOrder] = useState("");
 	const onConfirmOrder = () => {
-		const totalAmount = Object.keys(cart.cartItems).reduce(
+		var totalAmount = Object.keys(cart.cartItems).reduce(
 			(totalPrice, key) => {
 				const { price, qty } = cart.cartItems[key];
 				return totalPrice + price * qty;
 			},
 			0
 		);
+
+	var totalAmount=(coupon.type == 'percentage'? totalAmount*(1-couponAmount):totalAmount-couponAmount) + 50
+	console.log("latest total",totalAmount)
+
+
+
 		const items = Object.keys(cart.cartItems).map((key) => ({
 			productId: key,
 			payablePrice: cart.cartItems[key].price,
@@ -123,11 +133,13 @@ export default function Checkout(props) {
 			items,
 			paymentStatus: "pending",
 			paymentType,
+			coupon:coupon._id
 		};
 
 		console.log(payload);
 		dispatch(addOrder(payload));
 		setActiveStep(activeStep+1)
+		localStorage.removeItem('coupon')
 		setConfirmOrder(true);
 	};
 
