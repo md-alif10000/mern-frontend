@@ -4,7 +4,7 @@ const initState = {
 	address: [],
 	orders: [],
 	orderDetails: {},
-	recharges:[],
+	recharge:[],
 	error: null,
 	loading: false,
 	orderFetching: false,
@@ -102,7 +102,7 @@ export default (state = initState, action) => {
 					case rechargeConstants.GET_RECHARGES_SUCCESS:
 						state={
 							...state,
-							recharges:action.payload
+							recharge:action.payload
 						}
 						case rechargeConstants.GET_USER_ADDRESS_FAILURE:
 							state={

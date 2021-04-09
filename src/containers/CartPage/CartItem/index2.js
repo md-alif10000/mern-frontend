@@ -39,15 +39,15 @@ export default function CartItem2(props) {
 			</td>
 			<td style={{ display: "flex" }}>
 				<button
-					className='updateQtyBtn'
+					className='btn btn-danger rounded m-1'
 					onClick={onQuantityDecrement}>
 					<RemoveCircleOutlineOutlinedIcon />
 				</button>
 
-				<input type='number' value={qty} min='1' readOnly />
+				<input type='number' className='btn-primary rounded m-auto' value={qty} min='1' readOnly />
 
 				<button
-					className='updateQtyBtn'
+					className='btn btn-success rounded m-1'
 					onClick={onQuantityIncrement}>
 					<AddCircleOutlineIcon />
 				</button>

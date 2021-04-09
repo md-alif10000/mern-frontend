@@ -16,6 +16,7 @@ import FacebookLogin from "react-facebook-login";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Header from "../../../components/Header/index";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -97,34 +98,32 @@ export default function () {
 		const [phone, setPhone] = useState("");
 		const [password, setPassword] = useState("");
 		const [confirmPassword, setConfirmPassword] = useState("");
+		const [profilePicture, setProfilePicture] = useState('')
 
 
 		const otpRequest=(e)=>{
 			e.preventDefault()
+			if(name=='')return Swal.fire("Opps !", "Name is required", "warning");
+			if(phone=='')return Swal.fire('Opps !','Phone number is required','warning')
+			if(phone.length != 11)return Swal.fire("Opps !", "Wrong phone number", "warning");
+			if(password.length <=5)return Swal.fire("Opps !", "Password must be 6 Character long", "warning");
+			if (confirmPassword == "")return Swal.fire("Opps !", "Please confirm your password", "warning");
+			if(password!==confirmPassword)return Swal.fire("Opps !", "Password didn't match", "warning");
+
+
+	 console.log(profilePicture)
 				setActiveStep(activeStep + 1);
 			dispatch(registerOtp(phone))
-			setUserDetails({ name, email, phone, password });
+			setUserDetails({ name, email, phone, password,profilePicture });
 			console.log('otp sending')
 		}
 
-		const userRegister = (e) => {
-			e.preventDefault();
-			setActiveStep(activeStep + 1);
-			// if (password != confirmPassword) {
-			// 	return new Noty({
-			// 		text: "Password Didn't match ",
-			// 	}).show();
-			// }
-			// dispatch(register({ name, email, phone, password }));
-			setUserDetails({ name, email, phone, password });
-		};
+
 
 
 		const responseSuccessGoogle=(response)=>{
-			console.log('Token Id',response.tokenId)
 
 			dispatch(googleLogin({tokenId:response.tokenId}))
-			console.log(response)
 
 		}
 		const responseFailureGoogle=(err)=>{
@@ -180,6 +179,9 @@ export default function () {
 									placeholder='Enter your phone'
 								/>
 							</div>
+							<div>
+								<input type='file' className='btn btn-success' placeholder='Choose Picture' onChange={(e)=>setProfilePicture(e.target.value)} />
+							</div>
 							<div className='input-container'>
 								<label className='label'>Password</label>
 								<br />
@@ -217,18 +219,7 @@ export default function () {
 							<h2>OR</h2>
 							<p>Login With</p>
 							<div className='loginicon-container'>
-								{/* <div className='icon'>
-									<img
-										className='iconImg'
-										src='https://img-authors.flaticon.com/google.jpg'
-									/>
-								</div>
-								<div className='icon'>
-									<img
-										className='iconImg'
-										src='https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo.png'
-									/>
-								</div> */}
+						
 								<div
 									style={{ display: "flex", justifyContent: "space-between" }}>
 									<div style={{ margin: "20px" }}>

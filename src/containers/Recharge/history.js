@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from "react";
-import {useDispatch,useSelector} from 'react-redux'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { getRecharges } from "../../actions/recharge.action";
+import Header from "../../components/Header";
 
 const useStyles = makeStyles({
 	table: {
@@ -29,45 +30,51 @@ const rows = [
 ];
 
 export default function BasicTable() {
-
 	const classes = useStyles();
 	const dispatch = useDispatch();
+		useEffect(() => {
+			dispatch(getRecharges());
+		}, []);
 
-	// useEffect(() => {
-	// 	dispatch(getRecharges());
-     
-	// }, []);
-	dispatch(getRecharges());
-         const user = useSelector((state) => state.user);
-					const allRecharge = user.recharges;
-	
-	
+
+	const recharge = useSelector((state) => state.recharge);
+	// const { recharges } = user.recharge.recharges && user.recharge;
+
 
 	return (
-		<TableContainer component={Paper}>
-			<Table className={classes.table} aria-label='simple table'>
-				<TableHead>
-					<TableRow>
-						<TableCell>Dessert (100g serving)</TableCell>
-						<TableCell align='right'>Calories</TableCell>
-						<TableCell align='right'>Fat&nbsp;(g)</TableCell>
-						<TableCell align='right'>Carbs&nbsp;(g)</TableCell>
-					</TableRow>
-				</TableHead>
-				{/* {console.log("Recharges", allRecharge)} */}
-				{/* <TableBody>
-					{allRecharge.foreach(recharge => (
-						<TableRow key={recharge.number}>
-							<TableCell component='th' scope='row'>
-								{recharge.number}
-							</TableCell>
-							<TableCell align='right'>{recharge.amount}</TableCell>
-							<TableCell align='right'>{recharge.provider}</TableCell>
-							<TableCell align='right'>{recharge.type}</TableCell>
-						</TableRow>
-					))}
-				</TableBody> */}
-			</Table>
-		</TableContainer>
+		<>
+			<Header fixed />
+			<div className='container mt-5 pt-5 text-lg'>
+				<TableContainer component={Paper}>
+					<Table className={classes.table} aria-label='simple table'>
+						<TableHead>
+							<TableRow>
+								<TableCell align='left'>Serial</TableCell>
+								<TableCell align='right'>Phone Number</TableCell>
+								<TableCell align='right'>Amount</TableCell>
+								<TableCell align='right'>Operator</TableCell>
+								<TableCell align='right'>Status</TableCell>
+							</TableRow>
+						</TableHead>
+
+						{recharge.recharges && recharge.recharges.length > 0 ? (
+							<TableBody>
+								{recharge.recharges.map((recharge, index) => (
+									<TableRow key={recharge.number}>
+										<TableCell align='right'>{index}</TableCell>
+										<TableCell component='th' scope='row'>
+											{recharge.number}
+										</TableCell>
+										<TableCell align='right'>{recharge.amount}</TableCell>
+										<TableCell align='right'>{recharge.provider}</TableCell>
+										<TableCell align='right'>{recharge.status}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						) : null}
+					</Table>
+				</TableContainer>
+			</div>
+		</>
 	);
 }
